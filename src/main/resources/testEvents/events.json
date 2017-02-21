@@ -1,0 +1,32 @@
+[
+  {
+    "id": "9885ad62-a775-46b6-84d7-493de185c73c",
+    "name": "applicationStartedEvent",
+    "timestamp": 1487642669,
+    "version": "TEST-SNAPSHOT"
+  },
+  {
+    "id": "9885ad62-a775-46b6-84d7-493de185c73c",
+    "name": "customerActionEvent",
+    "timestamp": 1487642670,
+    "version": "TEST-SNAPSHOT"
+  },
+  {
+    "id": "9885ad62-a775-46b6-84d7-493de185c73c",
+    "name": "customerActionEvent",
+    "timestamp": 1487642683,
+    "version": "TEST-SNAPSHOT"
+  },
+  {
+    "id": "9885ad62-a775-46b6-84d7-493de185c73c",
+    "name": "customerTransactionEvent",
+    "timestamp": 1487642690,
+    "version": "TEST-SNAPSHOT"
+  },
+  {
+    "id": "9885ad62-a775-46b6-84d7-493de185c73c",
+    "name": "adminLoginEvent",
+    "timestamp": 1487642700,
+    "version": "TEST-SNAPSHOT"
+  }
+]

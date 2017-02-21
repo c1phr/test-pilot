@@ -1,0 +1,3 @@
+watcher:
+  interval: 0 0 */1 * * *
+  eventStoreUrls: local:/testEvents/events.json

@@ -20,7 +20,7 @@ data class Event(
         @Column
         val name: String,
         @Column
-        val source: String,
+        var source: String,
         @Column
         val version: String,
         @Column
