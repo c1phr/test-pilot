@@ -17,15 +17,15 @@ import javax.persistence.Table
 data class Event(
         @Id
         @Column
-        val id:UUID,
+        val id:UUID = UUID.randomUUID(),
         @Column
-        val name: String,
+        val name: String = "",
         @Column
-        var source: String?,
+        var source: String = "",
         @Column
-        val version: String,
+        val version: String = "",
         @Column
-        var timestamp: Int,
+        var timestamp: Int = 0,
         @Column
         @JsonIgnore
         var count: Int = 1
