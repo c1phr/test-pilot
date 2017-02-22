@@ -1,18 +1,16 @@
 package com.batchofcode.observe
 
 import com.batchofcode.observe.model.Event
-import com.batchofcode.observe.service.EventService
 import com.batchofcode.observe.service.TestPlanService
-import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
 
 /**
  * Created by ryanbatchelder on 2/19/17.
  */
 @Component
-class RuleValidator constructor(val eventService: EventService, val testPlanService: TestPlanService) {
+class RuleValidator constructor(val testPlanService: TestPlanService) {
     fun checkRule(event: Event) {
-        val plan = testPlanService.getBySourceAndVersion(event.source, event.version)
+        val plan = testPlanService.getBySourceAndVersion(event.source.orEmpty(), event.version)
         if (plan != null) {
             val rule = plan.rules.firstOrNull {it.eventName == event.name}
             if (rule != null) {

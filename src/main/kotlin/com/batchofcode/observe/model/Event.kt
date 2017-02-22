@@ -13,6 +13,7 @@ import javax.persistence.Table
  */
 @Table
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Entity
 data class Event(
         @Id
         @Column
@@ -20,7 +21,7 @@ data class Event(
         @Column
         val name: String,
         @Column
-        var source: String,
+        var source: String?,
         @Column
         val version: String,
         @Column

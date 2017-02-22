@@ -1,7 +1,7 @@
 package com.batchofcode.observe.service
 
 import com.batchofcode.observe.model.TestPlan
-import com.batchofcode.observe.model.TestPlanRepository
+import com.batchofcode.observe.repository.TestPlanRepository
 import org.springframework.stereotype.Service
 
 /**
@@ -13,5 +13,5 @@ class TestPlanService constructor(val testPlanRepository: TestPlanRepository) {
         testPlanRepository.save(testPlan)
     }
 
-    fun getBySourceAndVersion(source: String, version: String): TestPlan? = testPlanRepository.findFirstBySourceAndByVersion(source, version).getOrNull(0)
+    fun getBySourceAndVersion(source: String, version: String): TestPlan? = testPlanRepository.findFirstBySourceAndVersion(source, version).getOrNull(0)
 }

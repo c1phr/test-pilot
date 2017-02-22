@@ -1,5 +1,6 @@
-package com.batchofcode.observe.model
+package com.batchofcode.observe.repository
 
+import com.batchofcode.observe.model.TestRule
 import org.springframework.data.repository.CrudRepository
 
 /**

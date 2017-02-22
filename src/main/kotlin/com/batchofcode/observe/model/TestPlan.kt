@@ -1,22 +1,22 @@
 package com.batchofcode.observe.model
 
-import javax.persistence.Column
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 /**
  * Created by ryanbatchelder on 2/19/17.
  */
-@Table
+@Table (name = "test_plan")
+@Entity
 data class TestPlan (
     @Id
-    @Column
+    @Column(name = "plan_id")
     val id: String,
     @Column
     val source: String,
     @Column
     val version: String,
-    @Column
+
+    @OneToMany(mappedBy = "planId", cascade = arrayOf(CascadeType.ALL))
     val rules: List<TestRule>
 )
 {

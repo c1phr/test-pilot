@@ -4,6 +4,7 @@ import com.batchofcode.observe.model.Event
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import org.springframework.core.io.ClassPathResource
 import java.io.File
 
 /**
@@ -11,7 +12,7 @@ import java.io.File
  */
 
 fun getEventsFromFile(fileName: String, mapper: ObjectMapper): List<Event> {
-    val jsonFilePath = fileName.replace("local:", "")
-    val jsonFile = File(jsonFilePath)
+    val jsonFilePath = fileName.split(":").last()
+    val jsonFile = ClassPathResource(jsonFilePath).file
     return jacksonObjectMapper().readValue(jsonFile)
 }

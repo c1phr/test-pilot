@@ -1,13 +1,12 @@
 package com.batchofcode.observe.model
 
-import javax.persistence.Column
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 /**
  * Created by ryanbatchelder on 2/19/17.
  */
-@Table
+@Table(name = "test_rule")
+@Entity
 data class TestRule (
         @Id
         @Column
@@ -17,5 +16,9 @@ data class TestRule (
         @Column
         val count: Int,
         @Column
-        var satisfied: Boolean = false
+        var satisfied: Boolean = false,
+
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "test_plan_id")
+        val planId: TestPlan
 )
