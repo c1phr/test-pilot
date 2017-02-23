@@ -6,25 +6,25 @@
     "version": "TEST-SNAPSHOT"
   },
   {
-    "id": "9885ad62-a775-46b6-84d7-493de185c73c",
+    "id": "073ae9ad-ead0-456e-97ef-de3a6a4777aa",
     "name": "customerActionEvent",
     "timestamp": 1487642670,
     "version": "TEST-SNAPSHOT"
   },
   {
-    "id": "9885ad62-a775-46b6-84d7-493de185c73c",
+    "id": "470e2dcb-1676-4dae-a2a5-cfe1d0374d30",
     "name": "customerActionEvent",
     "timestamp": 1487642683,
     "version": "TEST-SNAPSHOT"
   },
   {
-    "id": "9885ad62-a775-46b6-84d7-493de185c73c",
+    "id": "d59efc21-2788-4c6a-8c91-25d6e3f35f9a",
     "name": "customerTransactionEvent",
     "timestamp": 1487642690,
     "version": "TEST-SNAPSHOT"
   },
   {
-    "id": "9885ad62-a775-46b6-84d7-493de185c73c",
+    "id": "0a1c12d9-628a-40c3-b58a-db0dfa2fba20",
     "name": "adminLoginEvent",
     "timestamp": 1487642700,
     "version": "TEST-SNAPSHOT"
