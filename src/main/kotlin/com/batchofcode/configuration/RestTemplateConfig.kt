@@ -1,4 +1,4 @@
-package com.batchofcode.observe.configuration
+package com.batchofcode.configuration
 
 import org.h2.server.web.WebServlet
 import org.springframework.context.annotation.Configuration

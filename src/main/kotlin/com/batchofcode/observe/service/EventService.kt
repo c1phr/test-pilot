@@ -1,6 +1,6 @@
 package com.batchofcode.observe.service
 
-import com.batchofcode.observe.RuleValidator
+import com.batchofcode.condition.RuleValidator
 import com.batchofcode.observe.model.Event
 import com.batchofcode.observe.repository.EventRepository
 import org.springframework.stereotype.Service

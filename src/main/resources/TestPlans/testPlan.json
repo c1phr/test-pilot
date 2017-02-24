@@ -1,0 +1,16 @@
+{
+  "id":"9a2da595-5efa-469a-9e8e-68ba6b298a2f",
+  "source": "local:events.json",
+  "version": "TEST-SNAPSHOT",
+  "rules":
+  [
+    {
+      "eventName": "customerActionEvent",
+      "count": 2
+    },
+    {
+      "eventName": "applicationStartedEvent",
+      "count": 1
+    }
+  ]
+}

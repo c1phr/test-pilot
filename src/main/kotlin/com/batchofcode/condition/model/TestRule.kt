@@ -1,5 +1,7 @@
-package com.batchofcode.observe.model
+package com.batchofcode.condition.model
 
+import com.fasterxml.jackson.annotation.JsonBackReference
+import com.fasterxml.jackson.annotation.JsonIgnore
 import java.util.*
 import javax.persistence.*
 
@@ -21,5 +23,5 @@ data class TestRule (
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "test_plan_id")
-        val planId: TestPlan? = null
+        var planId: TestPlan? = null
 )

@@ -1,6 +1,6 @@
-package com.batchofcode.observe.repository
+package com.batchofcode.condition.repository
 
-import com.batchofcode.observe.model.TestPlan
+import com.batchofcode.condition.model.TestPlan
 import org.springframework.data.repository.CrudRepository
 
 /**

@@ -1,7 +1,7 @@
-package com.batchofcode.observe.service
+package com.batchofcode.condition.service
 
-import com.batchofcode.observe.model.TestPlan
-import com.batchofcode.observe.repository.TestPlanRepository
+import com.batchofcode.condition.model.TestPlan
+import com.batchofcode.condition.repository.TestPlanRepository
 import org.springframework.stereotype.Service
 
 /**

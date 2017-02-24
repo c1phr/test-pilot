@@ -2,8 +2,8 @@ package com.batchofcode.observe
 
 import com.batchofcode.observe.model.Event
 import com.batchofcode.observe.service.EventService
-import com.batchofcode.observe.utils.getEventsFromFile
-import com.batchofcode.observe.utils.typeRef
+import com.batchofcode.utils.getEventsFromFile
+import com.batchofcode.utils.typeRef
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpMethod

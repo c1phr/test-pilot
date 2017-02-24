@@ -1,5 +1,6 @@
-package com.batchofcode.observe.model
+package com.batchofcode.condition.model
 
+import com.fasterxml.jackson.annotation.*
 import java.util.*
 import javax.persistence.*
 
@@ -8,6 +9,7 @@ import javax.persistence.*
  */
 @Table(name = "test_plan")
 @Entity
+
 data class TestPlan(
         @Id
         @Column(name = "plan_id")
@@ -17,8 +19,9 @@ data class TestPlan(
         @Column
         val version: String = "",
 
-        @OneToMany(mappedBy = "planId", cascade = arrayOf(CascadeType.ALL))
-        val rules: List<TestRule> = mutableListOf()
+        @OneToMany(mappedBy = "planId", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
+        @JsonIgnore
+        var rules: List<TestRule> = mutableListOf()
 ) {
     fun planSatisfied(): Boolean = rules.all { it.satisfied }
 }

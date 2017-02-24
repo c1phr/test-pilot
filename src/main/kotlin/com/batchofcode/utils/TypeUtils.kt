@@ -1,4 +1,4 @@
-package com.batchofcode.observe.utils
+package com.batchofcode.utils
 
 import org.springframework.core.ParameterizedTypeReference
 
