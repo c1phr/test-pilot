@@ -1,6 +1,6 @@
 package com.batchofcode.condition.model
 
-import com.fasterxml.jackson.annotation.*
+import com.fasterxml.jackson.annotation.JsonIgnore
 import java.util.*
 import javax.persistence.*
 
@@ -18,6 +18,10 @@ data class TestPlan(
         val source: String = "",
         @Column
         val version: String = "",
+        @Column
+        val notificationType: String,
+        @Column
+        val notificationEndPoint: String,
 
         @OneToMany(mappedBy = "planId", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
         @JsonIgnore
