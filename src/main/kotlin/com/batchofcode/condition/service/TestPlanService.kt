@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service
  */
 @Service
 class TestPlanService constructor(val testPlanRepository: TestPlanRepository) {
-    fun save(testPlan: TestPlan) {
-        testPlanRepository.save(testPlan)
-    }
+    fun save(testPlan: TestPlan): TestPlan = testPlanRepository.save(testPlan)
 
     fun getBySourceAndVersion(source: String, version: String): TestPlan? = testPlanRepository.findFirstBySourceAndVersion(source, version).getOrNull(0)
 }

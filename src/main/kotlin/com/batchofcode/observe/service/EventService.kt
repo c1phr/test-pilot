@@ -12,16 +12,17 @@ import org.springframework.stereotype.Service
 class EventService constructor(val eventRepository: EventRepository, val ruleValidator: RuleValidator) {
     fun save(event: Event) {
         val existingEvent = eventRepository.findFirstByNameAndSourceAndVersion(event.name, event.source.orEmpty(), event.version).getOrNull(0)
+        val savedEvent: Event
         if (existingEvent != null) {
             existingEvent.count++
             existingEvent.timestamp = event.timestamp // Update to the latest timestamp
-            eventRepository.save(existingEvent)
+            savedEvent = eventRepository.save(existingEvent)
         }
         else {
-            eventRepository.save(event)
+            savedEvent = eventRepository.save(event)
         }
 
-        ruleValidator.checkRule(event)
+        ruleValidator.checkRule(savedEvent)
     }
 
     fun save(events: List<Event>) {

@@ -28,5 +28,11 @@
     "name": "adminLoginEvent",
     "timestamp": 1487642700,
     "version": "TEST-SNAPSHOT"
+  },
+  {
+    "id": "470e2dcb-1676-4dae-a2a5-cfe1d0374d31",
+    "name": "customerActionEvent",
+    "timestamp": 1487643000,
+    "version": "TEST-SNAPSHOT"
   }
 ]

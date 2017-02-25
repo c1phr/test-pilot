@@ -19,9 +19,11 @@ data class TestPlan(
         @Column
         val version: String = "",
         @Column
-        val notificationType: String,
+        val notificationType: String = "",
         @Column
-        val notificationEndPoint: String,
+        val notificationTarget: String = "",
+        @Column
+        var completed: Boolean = false,
 
         @OneToMany(mappedBy = "planId", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
         @JsonIgnore

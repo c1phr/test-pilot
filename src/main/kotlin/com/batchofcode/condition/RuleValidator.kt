@@ -1,5 +1,6 @@
 package com.batchofcode.condition
 
+import com.batchofcode.condition.model.TestPlan
 import com.batchofcode.condition.service.TestPlanService
 import com.batchofcode.notify.service.notifyPlanSatisfied
 import com.batchofcode.observe.model.Event
@@ -17,11 +18,18 @@ class RuleValidator constructor(val testPlanService: TestPlanService) {
             if (rule != null) {
                 if (event.count >= rule.count) {
                     rule.satisfied = true
-                    testPlanService.save(plan) // Save updated plan
-
-                    notifyPlanSatisfied(plan)
+                    val savedPlan = testPlanService.save(plan) // Save updated plan
+                    checkPlan(savedPlan)
                 }
             }
+        }
+    }
+
+    fun checkPlan(plan: TestPlan) {
+        if (!plan.completed && plan.planSatisfied()) {
+            plan.completed = true
+            notifyPlanSatisfied(plan)
+            testPlanService.save(plan)
         }
     }
 }

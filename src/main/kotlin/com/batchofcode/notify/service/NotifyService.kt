@@ -7,6 +7,7 @@ import com.batchofcode.condition.model.TestPlan
  */
 
 fun notifyPlanSatisfied(plan: TestPlan) {
+    print("Test Plan successful: ${plan.id}")
     if (plan.notificationType == "email") {
         // TODO: Send email
     }

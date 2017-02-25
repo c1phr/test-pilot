@@ -2,6 +2,8 @@
   "id":"9a2da595-5efa-469a-9e8e-68ba6b298a2f",
   "source": "local:events.json",
   "version": "TEST-SNAPSHOT",
+  "notificationType": "email",
+  "notificationTarget": "ryanbatch@gmail.com",
   "rules":
   [
     {
