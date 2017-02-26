@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component
 @Component
 class RuleLoader constructor(private val testPlanService: TestPlanService): ApplicationListener<ApplicationReadyEvent> {
 
-    @Value("classpath:TestPlans/testPlan.json")
+    @Value("\${plan.path}")
     private lateinit var resource: Resource
 
     override fun onApplicationEvent(event: ApplicationReadyEvent?) {

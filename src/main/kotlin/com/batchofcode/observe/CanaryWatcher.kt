@@ -38,12 +38,8 @@ class CanaryWatcher constructor (val eventService: EventService, val restTemplat
                 val request = RequestEntity<Any>(HttpMethod.GET, URI.create(url))
                 val eventResp = restTemplate.exchange(request, typeRef<List<Event>>())
                 val allEvents = eventResp?.body ?: listOf()
-                allEvents.map { it.source = url }
-                newEvents.addAll(allEvents
-                        .filter { it.timestamp > latestTimestamp }
-                        .map { it.source = url }
-                        .filterIsInstance<Event>()
-                )
+                allEvents.forEach{ it.source = url }
+                newEvents.addAll(allEvents.filter { it.timestamp > latestTimestamp })
             }
         }
 

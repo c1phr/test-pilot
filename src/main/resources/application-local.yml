@@ -13,3 +13,6 @@ spring:
 watcher:
   interval: "*/10 * * * * *"
   eventStoreUrls: local:events.json
+
+plan:
+  path: classpath:TestPlans/testPlan.json

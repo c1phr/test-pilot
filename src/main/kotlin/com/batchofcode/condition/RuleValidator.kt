@@ -2,7 +2,7 @@ package com.batchofcode.condition
 
 import com.batchofcode.condition.model.TestPlan
 import com.batchofcode.condition.service.TestPlanService
-import com.batchofcode.notify.service.notifyPlanSatisfied
+import com.batchofcode.notify.service.NotifyService
 import com.batchofcode.observe.model.Event
 import org.springframework.stereotype.Component
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
  * Created by ryanbatchelder on 2/19/17.
  */
 @Component
-class RuleValidator constructor(val testPlanService: TestPlanService) {
+class RuleValidator constructor(val testPlanService: TestPlanService, val notifyService: NotifyService) {
     fun checkRule(event: Event) {
         val plan = testPlanService.getBySourceAndVersion(event.source.orEmpty(), event.version)
         if (plan != null) {
@@ -28,7 +28,7 @@ class RuleValidator constructor(val testPlanService: TestPlanService) {
     fun checkPlan(plan: TestPlan) {
         if (!plan.completed && plan.planSatisfied()) {
             plan.completed = true
-            notifyPlanSatisfied(plan)
+            notifyService.notifyPlanSatisfied(plan)
             testPlanService.save(plan)
         }
     }

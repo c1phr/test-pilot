@@ -1,17 +1,21 @@
 {
   "id":"9a2da595-5efa-469a-9e8e-68ba6b298a2f",
   "source": "local:events.json",
-  "version": "TEST-SNAPSHOT",
-  "notificationType": "bamboo",
-  "notificationTarget": "environmentId=304153634&versionId=303377694",
+  "version": "0.1",
+  "notificationType": "email",
+  "notificationTarget": "test@test.com",
   "rules":
   [
     {
-      "eventName": "customerActionEvent",
+      "eventName": "loginEvent",
+      "count": 1
+    },
+    {
+      "eventName": "addedToShoppingCartEvent",
       "count": 2
     },
     {
-      "eventName": "applicationStartedEvent",
+      "eventName": "purchasedEvent",
       "count": 1
     }
   ]
