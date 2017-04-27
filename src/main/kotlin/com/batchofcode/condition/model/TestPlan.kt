@@ -1,8 +1,14 @@
 package com.batchofcode.condition.model
 
-import com.fasterxml.jackson.annotation.JsonIgnore
+import java.io.Serializable
 import java.util.*
-import javax.persistence.*
+import javax.persistence.CascadeType
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.FetchType
+import javax.persistence.Id
+import javax.persistence.OneToMany
+import javax.persistence.Table
 
 /**
  * Created by ryanbatchelder on 2/19/17.
@@ -19,15 +25,16 @@ data class TestPlan(
         @Column
         val version: String = "",
         @Column
+        val latestTimestamp: Long = 0,
+        @Column
         val notificationType: String = "",
         @Column
         val notificationTarget: String = "",
         @Column
         var completed: Boolean = false,
 
-        @OneToMany(mappedBy = "planId", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
-        @JsonIgnore
-        var rules: List<TestRule> = mutableListOf()
-) {
+        @OneToMany(mappedBy = "planId", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.LAZY)
+        var rules: MutableList<TestRule> = mutableListOf()
+): Serializable {
     fun planSatisfied(): Boolean = rules.all { it.satisfied }
 }

@@ -17,7 +17,7 @@ import java.util.*
 @Component
 class AuthenticationHelper constructor(private val env: Environment, private val restTemplate: RestTemplate) {
 
-    @Value("\${deployApi.host}\${deployApi.extension}")
+    @Value("\${deployApi.host:null}\${deployApi.extension:null}")
     private lateinit var deployApi: String
 
     @Throws(Exception::class)

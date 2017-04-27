@@ -14,14 +14,9 @@ class RuleValidator constructor(val testPlanService: TestPlanService, val notify
     fun checkRule(event: Event) {
         val plan = testPlanService.getBySourceAndVersion(event.source.orEmpty(), event.version)
         if (plan != null) {
-            val rule = plan.rules.firstOrNull {it.eventName == event.name}
-            if (rule != null) {
-                if (event.count >= rule.count) {
-                    rule.satisfied = true
-                    val savedPlan = testPlanService.save(plan) // Save updated plan
-                    checkPlan(savedPlan)
-                }
-            }
+            val rule = plan.rules.firstOrNull { it.eventName == event.name }
+            rule?.satisfied = rule?.checkRuleIsSatisfied(event) ?: false
+            checkPlan(plan)
         }
     }
 

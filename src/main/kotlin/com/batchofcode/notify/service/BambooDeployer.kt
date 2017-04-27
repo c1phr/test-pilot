@@ -10,6 +10,7 @@ class BambooDeployer constructor(private val authenticationHelper: Authenticatio
 
     fun deploy(plan: TestPlan) {
         val deploymentId = plan.notificationTarget
+        print("Triggering Deploy")
         val deployResponse = authenticationHelper.makeAuthenticatedCall(bambooDeployTriggerEndpoint + "?$deploymentId", HttpMethod.POST, String::class.java)
         print(deployResponse.body)
     }
