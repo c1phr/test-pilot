@@ -2,7 +2,6 @@ package com.batchofcode.notify.service
 
 import SSLUtil
 import com.batchofcode.utils.traceString
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.env.Environment
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
@@ -17,18 +16,11 @@ import java.util.*
 @Component
 class AuthenticationHelper constructor(private val env: Environment, private val restTemplate: RestTemplate) {
 
-    @Value("\${deployApi.host:null}\${deployApi.extension:null}")
-    private lateinit var deployApi: String
-
     @Throws(Exception::class)
     internal fun <T : Any> makeAuthenticatedCall(endpoint: String, method: HttpMethod, pojo: Class<T>, requestBody: Any? = null): HttpEntity<T> {
         restTemplate.messageConverters.add(MappingJackson2HttpMessageConverter())
         val injectedPassword: String? = env.getProperty("deployPassword")
         val injectedUsername: String? = env.getProperty("deployUsername")
-        val callUrl = when {
-            endpoint.contains("http") -> endpoint
-            else -> deployApi + endpoint
-        }
         if (injectedPassword == null || injectedUsername == null) {
             throw Exception("Missing username or password")
         }
@@ -47,7 +39,7 @@ class AuthenticationHelper constructor(private val env: Environment, private val
             SSLUtil.turnOffSslChecking()
         }
         try {
-            return restTemplate.exchange(callUrl, method, request, pojo)
+            return restTemplate.exchange(endpoint, method, request, pojo)
         } catch (ex: RestClientException) {
             print("makeAuthenticatedCall failed with: ${ex.message}. \n" +
                     "Params: \n" +
@@ -55,7 +47,7 @@ class AuthenticationHelper constructor(private val env: Environment, private val
                     "Method: $method\n" +
                     "Request Body: $requestBody\n" +
                     "Endpoint: $endpoint\n" +
-                    "Full URL: $callUrl\n" +
+                    "Full URL: $endpoint\n" +
                     "Trace: \n ${ex.stackTrace.traceString()}")
             throw ex
         }

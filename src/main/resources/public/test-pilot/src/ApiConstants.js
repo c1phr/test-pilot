@@ -1,0 +1,1 @@
+export const PLAN_API = '/api/plan'

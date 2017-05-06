@@ -1,7 +1,3 @@
-server:
-  port: 9090
-  ssl:
-    enabled: false
 spring:
   datasource:
     url: jdbc:h2:file:~/db;DB_CLOSE_ON_EXIT=TRUE
@@ -9,14 +5,10 @@ spring:
     password: test
     driverClassName: org.h2.Driver
 
-  h2:
-    console:
-      enabled: true
-      path: /console
-
 watcher:
-  enabled: true
+  enabled: false
   interval: "*/10 * * * * *"
+  eventStoreUrls: local:events.json
 
 plan:
   path: classpath:TestPlans/testPlan.json

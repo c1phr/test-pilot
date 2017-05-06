@@ -1,5 +1,6 @@
 package com.batchofcode.condition.model
 
+import com.batchofcode.notify.model.NotificationType
 import java.io.Serializable
 import java.util.*
 import javax.persistence.CascadeType
@@ -27,11 +28,13 @@ data class TestPlan(
         @Column
         val latestTimestamp: Long = 0,
         @Column
-        val notificationType: String = "",
+        val notificationType: NotificationType? = null,
         @Column
         val notificationTarget: String = "",
         @Column
         var completed: Boolean = false,
+        @Column
+        var active: Boolean = false,
 
         @OneToMany(mappedBy = "planId", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.LAZY)
         var rules: MutableList<TestRule> = mutableListOf()

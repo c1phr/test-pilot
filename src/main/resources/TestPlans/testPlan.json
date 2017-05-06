@@ -2,7 +2,7 @@
   "id":"9a2da595-5efa-469a-9e8e-68ba6b298a2f",
   "source": "local:events.json",
   "version": "0.1",
-  "notificationType": "email",
+  "notificationType": "EMAIL",
   "notificationTarget": "test@test.com",
   "rules":
   [

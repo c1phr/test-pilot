@@ -20,41 +20,47 @@ import java.net.URI
 @Component
 class CanaryWatcher constructor (val eventService: EventService, val restTemplate: RestTemplate, val testPlanService: TestPlanService) {
 
-    @Value("\${watcher.eventStoreUrls}")
-    private lateinit var canaryEventStoreUrl: String
+    @Value("\${watcher.enabled}")
+    private lateinit var watcherEnabled: String
 
     private val mapper = jacksonObjectMapper()
 
     @Scheduled(cron = "\${watcher.interval}")
     private fun pollEventStore() {
+        if (!watcherEnabled.toBoolean()) {
+            return
+        }
         val latestTimestamp = eventService.getLatestEvent()?.timestamp ?: 0
         val newEvents: MutableList<Event> = mutableListOf()
+        val sourceUrls: List<String>? = eventService.getAll()?.distinctBy { it.source }?.map { it.source }
 
-        if (canaryEventStoreUrl.contains("local:")) { // Running from local test JSON
-            val allEvents = getEventsFromFile(canaryEventStoreUrl, mapper).filter { it.timestamp > latestTimestamp }
-            allEvents.forEach { it.source = canaryEventStoreUrl }
-            newEvents.addAll(allEvents)
-        }
-        else {
-            for (url in canaryEventStoreUrl.split(",")) { // Allow for multiple remote sources
-                val request = RequestEntity<Any>(HttpMethod.GET, URI.create(url))
-                val eventResp = restTemplate.exchange(request, typeRef<List<Event>>()) // Get events from API
-                val allEvents = eventResp?.body ?: listOf()
+        sourceUrls?.forEach{ planSource ->
+            if (planSource.contains("local:")) { // Running from local test JSON
+                val allEvents = getEventsFromFile(planSource, mapper).filter { it.timestamp > latestTimestamp }
+                allEvents.forEach { it.source = planSource }
+                newEvents.addAll(allEvents)
+            }
+            else {
+                for (url in planSource.split(",")) { // Allow for multiple remote sources
+                    val request = RequestEntity<Any>(HttpMethod.GET, URI.create(url))
+                    val eventResp = restTemplate.exchange(request, typeRef<List<Event>>()) // Get events from API
+                    val allEvents = eventResp?.body ?: listOf()
 
-                allEvents.forEach{ it.source = url }
+                    allEvents.forEach{ it.source = url }
 
-                for (event in allEvents.filter { it.timestamp > latestTimestamp }) {
-                    val eventRule = testPlanService.getBySourceAndVersion(event.source.orEmpty(), event.version)
-                    if (eventRule != null && (event.timestamp > eventRule.latestTimestamp)) {
-                        newEvents.add(event)
+                    for (event in allEvents.filter { it.timestamp > latestTimestamp }) {
+                        val eventRule = testPlanService.getBySourceAndVersion(event.source.orEmpty(), event.version)
+                        if (eventRule != null && (event.timestamp > eventRule.latestTimestamp)) {
+                            newEvents.add(event)
+                        }
                     }
                 }
             }
+
+            eventService.save(newEvents)
         }
 
 
-
-        eventService.save(newEvents)
     }
 
 

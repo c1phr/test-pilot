@@ -1,9 +1,10 @@
 package com.batchofcode.observe.controller
 
 import com.batchofcode.observe.model.Event
-import org.springframework.stereotype.Controller
+import com.batchofcode.observe.service.EventService
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 /**
@@ -11,9 +12,13 @@ import org.springframework.web.bind.annotation.RestController
  */
 @RestController
 @RequestMapping("/event")
-class EventController {
-    @RequestMapping("/", method = arrayOf(RequestMethod.POST))
-    fun post(event: Event) {
-
+class EventController(val eventService: EventService) {
+    @RequestMapping("/", method = arrayOf(RequestMethod.GET))
+    fun get(@RequestParam(required = false) sourceUrl: String? = null, @RequestParam(required = false) sourceVersion: String? = null): List<Event>? {
+        return when {
+            sourceUrl.isNullOrEmpty() && sourceVersion.isNullOrEmpty() -> eventService.getAll()
+            !sourceUrl.isNullOrEmpty() -> eventService.getSingleAppEvents(sourceUrl!!, sourceVersion)
+            else -> null
+        }
     }
 }

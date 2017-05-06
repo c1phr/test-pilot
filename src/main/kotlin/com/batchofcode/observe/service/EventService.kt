@@ -32,4 +32,15 @@ class EventService constructor(val eventRepository: EventRepository, val ruleVal
     fun getLatestEvent(): Event? {
         return eventRepository.findFirstByOrderByTimestampDesc().getOrNull(0)
     }
+
+    fun getAll(): List<Event>? {
+        return eventRepository.findAll().toList()
+    }
+
+    fun getSingleAppEvents(sourceUrl: String, sourceVersion: String?): List<Event>? {
+        return when {
+            sourceVersion.isNullOrEmpty() -> eventRepository.findBySource(sourceUrl)
+            else -> eventRepository.findBySourceAndVersion(sourceUrl, sourceVersion!!)
+        }
+    }
 }

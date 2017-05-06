@@ -23,7 +23,9 @@ class RuleValidator constructor(val testPlanService: TestPlanService, val notify
     fun checkPlan(plan: TestPlan) {
         if (!plan.completed && plan.planSatisfied()) {
             plan.completed = true
-            notifyService.notifyPlanSatisfied(plan)
+            if (plan.active) {
+                notifyService.notifyPlanSatisfied(plan)
+            }
             testPlanService.save(plan)
         }
     }

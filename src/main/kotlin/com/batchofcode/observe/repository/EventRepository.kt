@@ -9,5 +9,6 @@ import org.springframework.data.repository.PagingAndSortingRepository
 interface EventRepository : PagingAndSortingRepository<Event, String> {
     fun findFirstByOrderByTimestampDesc(): List<Event>
     fun findFirstByNameAndSourceAndVersion(name: String, source: String, version: String): List<Event>
-    fun findBySourceAndVersion(source: String, version: String): List<Event>
+    fun findBySource(source: String): List<Event>?
+    fun findBySourceAndVersion(source: String, version: String): List<Event>?
 }
