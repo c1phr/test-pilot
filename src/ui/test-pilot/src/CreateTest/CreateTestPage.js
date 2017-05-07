@@ -8,7 +8,12 @@ import '../App.css'
 class CreateTestPage extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.onChange = this.onChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
+    this.goBack = this.goBack.bind(this)
+    this.state = {
+      notificationType: "BAMBOO"
+    }
   }
 
   componentWillMount() {
@@ -20,6 +25,10 @@ class CreateTestPage extends Component {
     })
   }
 
+  goBack(event) {
+    this.props.router.push('/')
+  }
+
   FieldGroup({ id, label, props }) {
     return (
       <FormGroup controlId={id}>
@@ -29,18 +38,26 @@ class CreateTestPage extends Component {
     );
   }
 
-  onChange(event, {value, method}) {
+  onChange(event) {
     const target = event.target
     const value = target.value
     const name = target.name
-    const payload = {
-      name,
-      value
-    }
-    this.setState({
-      ...this.state,
-      name: value
+    this.setState({      
+      [name]: value
     })
+  }
+
+  onSubmit(event) {
+    const newPlan = {
+      source: this.state.source,
+      version: this.state.version,
+      notificationType: this.state.notificationType,
+      notificationTarget: this.state.notificationTarget
+    }
+    PlanService.submitPlan(newPlan).then((resp) => {
+      this.props.router.push('/')
+    })
+    event.preventDefault()
   }
 
   render() {
@@ -52,22 +69,25 @@ class CreateTestPage extends Component {
     return (
       <div className="App-body">
         <h2>Add Test Plan</h2>
-        <form method="POST" action="/api/plan">
+        <form onSubmit={this.onSubmit}>
           <label htmlFor="source">Event Source</label>
-          <SourceSelector sources={planSources} onChange={this.onChange} />
+          <SourceSelector sources={planSources} onChange={this.onChange} name="source" />
           <br/>
-          {this.FieldGroup({id: "input-version", label: "Version String", props: {type: "text"}})}
+          {this.FieldGroup({id: "input-version", label: "Version String", props: {type: "text", name: "version", onChange: this.onChange}})}
           <br/>
           <FormGroup controlId="notification-type">
             <ControlLabel>Notification Type</ControlLabel>
-            <FormControl componentClass="select" placeholder="Notification Type">
+            <FormControl componentClass="select" placeholder="Notification Type" name="notificationType" onChange={this.onChange}>
               <option value="BAMBOO">Bamboo</option>
               <option value="EMAIL">Email</option>
             </FormControl>
           </FormGroup>
           <br />
-          {this.FieldGroup({id: "input-notification-target", label: "Notification Target", props: {type: "text"}})}
-          <button type="submit" className="btn btn-default">
+          {this.FieldGroup({id: "input-notification-target", label: "Notification Target", props: {type: "text", name: "notificationTarget", onChange: this.onChange}})}
+          <button type="button" className="btn btn-default" onClick={this.goBack}>
+            Go Back
+          </button>
+          <button type="submit" className="btn btn-success">
             Submit
           </button>
         </form>

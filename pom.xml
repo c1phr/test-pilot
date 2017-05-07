@@ -138,6 +138,78 @@
                     </execution>
                 </executions>
             </plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<executions>
+                    <execution>
+                        <id>install-yarn-deps</id>
+                        <phase>compile</phase>
+                        <configuration>
+                            <workingDirectory>src/ui/test-pilot</workingDirectory>
+                            <executable>yarn</executable>
+                            <arguments>
+                                <argument>install</argument>
+                            </arguments>
+                        </configuration>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+					<execution>
+						<id>clean-ui</id>
+						<phase>clean</phase>
+						<configuration>
+							<workingDirectory>src/ui/test-pilot</workingDirectory>
+							<executable>rm</executable>
+							<arguments>
+								<argument>-rf</argument>
+								<argument>src/main/resources/public/test-pilot/*</argument>
+							</arguments>
+						</configuration>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>build-ui</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<workingDirectory>src/ui/test-pilot</workingDirectory>
+							<executable>yarnpkg</executable>
+							<arguments>
+								<argument>run</argument>
+								<argument>build</argument>
+							</arguments>
+						</configuration>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/src/main/resources/public/test-pilot</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/ui/test-pilot/build</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 

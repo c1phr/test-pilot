@@ -8,15 +8,21 @@
   [
     {
       "eventName": "loginEvent",
-      "count": 1
+      "type": "OCCURRENCE",
+      "condition": "EQUALS",
+      "conditionValue": "1"
     },
     {
       "eventName": "addedToShoppingCartEvent",
-      "count": 2
+      "type": "OCCURRENCE",
+      "condition": "EQUALS",
+      "conditionValue": "2"
     },
     {
       "eventName": "purchasedEvent",
-      "count": 1
+      "type": "OCCURRENCE",
+      "condition": "EQUALS",
+      "conditionValue": "1"
     }
   ]
 }

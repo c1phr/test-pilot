@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:h2:file:~/db;DB_CLOSE_ON_EXIT=TRUE
+    username: test
+    password: test
+    driverClassName: org.h2.Driver
+
+watcher:
+  enabled: false
+  interval: "*/10 * * * * *"
+  eventStoreUrls: local:events.json
+
+plan:
+  path: classpath:TestPlans/testPlan.json

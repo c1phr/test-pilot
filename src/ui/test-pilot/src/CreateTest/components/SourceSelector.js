@@ -22,6 +22,9 @@ class SourceSelector extends Component {
     this.setState({
       value: newValue
     })
+    event.target.value = newValue
+    event.target.name = this.props.name
+    this.props.onChange(event)
   }
 
   onSuggestionsFetchRequested({value}) {
@@ -60,7 +63,8 @@ class SourceSelector extends Component {
     const inputProps = {
       placeholder: "Source",
       value: this.state.value,
-      onChange: this.onChange
+      onChange: this.onChange,
+      name: this.props.name
     }
     return (
       <Autosuggest
@@ -77,7 +81,9 @@ class SourceSelector extends Component {
 }
 
 SourceSelector.propTypes = {
-  sources: PropTypes.array.isRequired
+  sources: PropTypes.array.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func
 }
 
 SourceSelector.defaultProps = {

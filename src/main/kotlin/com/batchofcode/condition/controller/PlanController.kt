@@ -26,8 +26,7 @@ class PlanController(val testPlanService: TestPlanService) {
         return ResponseEntity(ObjectMapper().writeValueAsString(testPlanService.getOne(testPlanId)), HttpStatus.OK)
     }
 
-    @RequestMapping(value = "", method = arrayOf(RequestMethod.POST),
-            consumes = arrayOf(MediaType.APPLICATION_FORM_URLENCODED_VALUE), produces = arrayOf("application/json"))
+    @RequestMapping(value = "", method = arrayOf(RequestMethod.POST), produces = arrayOf("application/json"))
     fun addPlan(@RequestBody newPlan: TestPlan): ResponseEntity<String> {
         val newPlan = testPlanService.save(newPlan)
         return ResponseEntity(ObjectMapper().writeValueAsString(newPlan), HttpStatus.OK)
