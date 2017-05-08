@@ -5,7 +5,6 @@ import com.batchofcode.condition.model.TestRule
 import com.batchofcode.condition.service.TestPlanService
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.http.HttpStatus
-import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
@@ -32,9 +31,21 @@ class PlanController(val testPlanService: TestPlanService) {
         return ResponseEntity(ObjectMapper().writeValueAsString(newPlan), HttpStatus.OK)
     }
 
-    @RequestMapping(value = "/{planId}/newRule", method = arrayOf(RequestMethod.POST), produces = arrayOf("application/json"))
+    @RequestMapping(value = "/{planId}/rule", method = arrayOf(RequestMethod.POST), produces = arrayOf("application/json"))
     fun addRule(@PathVariable planId: String, @RequestBody newRule: TestRule): ResponseEntity<String> {
         val modifiedPlan = testPlanService.addRule(planId, newRule)
         return ResponseEntity(ObjectMapper().writeValueAsString(modifiedPlan), HttpStatus.OK)
+    }
+
+    @RequestMapping(value = "/{planId}/active", method = arrayOf(RequestMethod.POST), produces = arrayOf("application/json"))
+    fun setActiveInactive(@PathVariable planId: String, @RequestBody activeStatus: Map<String, String>): ResponseEntity<String> {
+        val plan = testPlanService.getOne(planId)
+        val statusBool = activeStatus["activeStatus"]?.toBoolean()
+        if (plan != null && statusBool != null) {
+            plan.active = statusBool
+            testPlanService.save(plan)
+            return ResponseEntity(ObjectMapper().writeValueAsString(plan), HttpStatus.OK)
+        }
+        return ResponseEntity(null, HttpStatus.BAD_REQUEST)
     }
 }

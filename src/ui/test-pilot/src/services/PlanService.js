@@ -10,4 +10,11 @@ export default class PlanService {
   static submitPlan(newPlan) {
     return axios.post(PLAN_API, newPlan)
   }
+
+  static setPlanStatus(planId, newStatus) {
+    const payload = {
+      activeStatus: newStatus
+    }
+    return axios.post(PLAN_API + '/' + planId + '/active', payload)
+  }
 }
