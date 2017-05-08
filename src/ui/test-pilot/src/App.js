@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import PageHeader from 'react-bootstrap'
 import PlanService from './services/PlanService'
 
 import './App.css';
@@ -25,7 +26,7 @@ class App extends Component {
     }
     return (
         <p className="App-intro">
-          <h3>Plans</h3>
+          <PageHeader>Plans</PageHeader>
 
           {this.state.plans.data.map((plan) => {
             return (

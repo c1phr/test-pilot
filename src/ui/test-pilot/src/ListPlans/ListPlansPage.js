@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import PlanService from '../services/PlanService';
+import React, { Component } from 'react'
+import {Col, PanelGroup, Panel} from 'react-bootstrap'
+import PlanService from '../services/PlanService'
 
 import '../App.css';
 
@@ -25,36 +26,33 @@ class ListPlansPage extends Component {
     }
     return (
       <div className="App">
-        <div className="App-header">
-          <h2>Test Pilot</h2>
-        </div>
-        <p className="App-intro">
+        <div className="App-intro">
+          <Col xs={12}>
           <h3>Plans</h3>
 
-          {this.state.plans.data.map((plan) => {
+          {this.state.plans.data.map((plan, idx) => {
+            const planName = plan.source + " - " + plan.version
             return (
-              <div className="plan">
-                <span className="rules-header">Source: </span>{plan.source}
-                <br/>
-                <span className="rules-header">Version: </span>{plan.version}
-                <br/>
-                <span className="rules-header">Completed: </span>{plan.completed.toString()}
-                <br/>
-                <span className="rules-header">Active: </span>{plan.active.toString()}
-                <br />
-                <span className="rules-header">Rules: </span>
-                <div className="rules">
-                  <div className="rule-defs">
-                    {plan.rules.map((rule) => {
-                      return <div>{rule.eventName} - {rule.type} - {rule.condition}: {rule.conditionValue}</div>
-                    })}
+              <PanelGroup accordion key={idx}>
+                <Panel header={planName} eventKey={idx}>
+                  <span className="rules-header">Completed: </span>{plan.completed.toString()}
+                  <br/>
+                  <span className="rules-header">Active: </span>{plan.active.toString()}
+                  <br />
+                  <span className="rules-header">Rules: </span>
+                  <div className="rules">
+                    <div className="rule-defs">
+                      {plan.rules.map((rule, ruleIdx) => {
+                        return <div key={ruleIdx}>{rule.eventName} - {rule.type} - {rule.condition}: {rule.conditionValue}</div>
+                      })}
+                    </div>
                   </div>
-                </div>
-              </div>
+                </Panel>
+              </PanelGroup>
             )
           })}
-
-        </p>
+          </Col>
+        </div>
       </div>
     );
   }
