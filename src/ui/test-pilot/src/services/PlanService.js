@@ -17,4 +17,16 @@ export default class PlanService {
     }
     return axios.post(PLAN_API + '/' + planId + '/active', payload)
   }
+
+  static deleteRule(planId, ruleId) {
+    return axios.delete(this._getRuleApi(planId) + "/" + ruleId)
+  }
+
+  static addRule(planId, rulePayload) {
+    return axios.post(this._getRuleApi(planId), rulePayload)
+  }
+
+  static _getRuleApi(planId) {
+    return PLAN_API + '/' + planId + '/rule'
+  }
 }

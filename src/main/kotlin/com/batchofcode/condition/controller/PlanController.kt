@@ -37,6 +37,12 @@ class PlanController(val testPlanService: TestPlanService) {
         return ResponseEntity(ObjectMapper().writeValueAsString(modifiedPlan), HttpStatus.OK)
     }
 
+    @RequestMapping(value = "/{planId}/rule/{ruleId}", method = arrayOf(RequestMethod.DELETE), produces = arrayOf("application/json"))
+    fun removeRule(@PathVariable planId: String, @PathVariable ruleId: String): ResponseEntity<String> {
+        val modifiedPlan = testPlanService.removeRule(planId, ruleId)
+        return ResponseEntity(ObjectMapper().writeValueAsString(modifiedPlan), HttpStatus.OK)
+    }
+
     @RequestMapping(value = "/{planId}/active", method = arrayOf(RequestMethod.POST), produces = arrayOf("application/json"))
     fun setActiveInactive(@PathVariable planId: String, @RequestBody activeStatus: Map<String, String>): ResponseEntity<String> {
         val plan = testPlanService.getOne(planId)

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Col, PanelGroup, Panel} from 'react-bootstrap'
+import {Col, PanelGroup, Panel, Button} from 'react-bootstrap'
 import PlanService from '../services/PlanService'
 import ActiveInactiveBtn from '../components/ActiveInactiveBtn'
 
@@ -9,7 +9,7 @@ class ListPlansPage extends Component {
   constructor(props) {
     super(props)
     this.setActiveInactive = this.setActiveInactive.bind(this)
-
+    this.deleteRule = this.deleteRule.bind(this)
     this.state = {}
   }
 
@@ -29,6 +29,18 @@ class ListPlansPage extends Component {
     this.setState({
       ...this.state,
       plans: newPlans
+    })
+  }
+
+  deleteRule(planId, ruleId) {
+    PlanService.deleteRule(planId, ruleId).then((resp) => {
+      const newPlans = this.state.plans
+      const editedPlanIdx = newPlans.findIndex((plan) => plan.id === resp.data.id)
+      newPlans[editedPlanIdx].rules = resp.data.rules
+      this.setState({
+        ...this.state,
+        plans: newPlans
+      })
     })
   }
 
@@ -56,7 +68,10 @@ class ListPlansPage extends Component {
                   <div className="rules">
                     <div className="rule-defs">
                       {plan.rules.map((rule, ruleIdx) => {
-                        return <div key={ruleIdx}>{rule.eventName} - {rule.type} - {rule.condition}: {rule.conditionValue}</div>
+                        return <div key={ruleIdx}>
+                          <Button bsStyle="danger" onClick={() => this.deleteRule(plan.id, rule.id)}>Delete</Button>
+                          {rule.eventName} - {rule.type} - {rule.condition}: {rule.conditionValue}
+                          </div>
                       })}
                     </div>
                   </div>

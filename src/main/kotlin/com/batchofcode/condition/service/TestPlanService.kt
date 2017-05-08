@@ -29,5 +29,15 @@ class TestPlanService constructor(val testPlanRepository: TestPlanRepository, va
         return testPlanRepository.save(newPlan)
     }
 
+    fun removeRule(planId: String, ruleId: String): TestPlan {
+        val plan = testPlanRepository.findOne(planId)
+        val newPlan = plan.copy(
+                rules = plan.rules.filter { it.id != ruleId }.toMutableList()
+        )
+        val savedPlan = testPlanRepository.save(newPlan)
+        testRuleRepository.delete(ruleId)
+        return savedPlan
+    }
+
     fun getBySourceAndVersion(source: String, version: String): TestPlan? = testPlanRepository.findFirstBySourceAndVersion(source, version).getOrNull(0)
 }
