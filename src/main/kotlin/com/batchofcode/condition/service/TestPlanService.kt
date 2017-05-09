@@ -21,12 +21,9 @@ class TestPlanService constructor(val testPlanRepository: TestPlanRepository, va
 
     fun addRule(testPlanId: String, newRule: TestRule): TestPlan {
         val plan = testPlanRepository.findOne(testPlanId)
-        val newRules = plan.rules.toMutableList()
-        newRules.add(newRule)
-        val newPlan = plan.copy(
-                rules = newRules
-        )
-        return testPlanRepository.save(newPlan)
+        newRule.planId = plan
+        plan.rules.add(newRule)
+        return testPlanRepository.save(plan)
     }
 
     fun removeRule(planId: String, ruleId: String): TestPlan {

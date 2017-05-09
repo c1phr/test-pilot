@@ -65,6 +65,7 @@ class ListPlansPage extends Component {
                   <ActiveInactiveBtn planId={plan.id} currentStatus={plan.active} onChange={this.setActiveInactive}/>
                   <br />
                   <span className="rules-header">Rules: </span>
+                  <Button bsStyle="default" onClick={() => this.props.router.push('/' + plan.id + '/addRule')}>Add Rules</Button>
                   <div className="rules">
                     <div className="rule-defs">
                       {plan.rules.map((rule, ruleIdx) => {

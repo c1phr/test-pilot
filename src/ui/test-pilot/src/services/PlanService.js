@@ -7,6 +7,10 @@ export default class PlanService {
     return axios.get(PLAN_API)
   }
 
+  static getPlan(planId) {
+    return axios.get(PLAN_API + '/' + planId)
+  }
+
   static submitPlan(newPlan) {
     return axios.post(PLAN_API, newPlan)
   }
