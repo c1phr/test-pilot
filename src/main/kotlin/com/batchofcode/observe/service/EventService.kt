@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
  */
 @Service
 class EventService constructor(val eventRepository: EventRepository, val ruleValidator: RuleValidator) {
-    fun save(event: Event) {
+    fun save(event: Event): Event {
         val existingEvent = eventRepository.findFirstByNameAndSourceAndVersion(event.name, event.source.orEmpty(), event.version).getOrNull(0)
         val savedEvent: Event
         if (existingEvent != null) {
@@ -23,6 +23,7 @@ class EventService constructor(val eventRepository: EventRepository, val ruleVal
         }
 
         ruleValidator.checkRule(savedEvent)
+        return savedEvent
     }
 
     fun save(events: List<Event>) {

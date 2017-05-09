@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 class NotifyService constructor(private val bambooDeployer: BambooDeployer) {
 
     fun notifyPlanSatisfied(plan: TestPlan) {
-        print("Test Plan successful: ${plan.id}")
+        println("Test Plan successful: ${plan.id}")
         if (plan.notificationType == EMAIL) {
             // TODO: Send email
         }

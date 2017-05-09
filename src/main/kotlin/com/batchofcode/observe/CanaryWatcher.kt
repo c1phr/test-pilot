@@ -59,9 +59,5 @@ class CanaryWatcher constructor (val eventService: EventService, val restTemplat
 
             eventService.save(newEvents)
         }
-
-
     }
-
-
 }

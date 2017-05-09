@@ -44,6 +44,13 @@ class ListPlansPage extends Component {
     })
   }
 
+  renderAddRuleButton(planData) {
+    if (!planData.plan.completed) {
+      return <Button bsStyle="default" onClick={() => this.props.router.push('/' + planData.plan.id + '/addRule')}>Add Rule</Button>
+    }
+    return null
+  }
+
   render() {
     if (this.state.plans == null) {
       return null
@@ -53,7 +60,7 @@ class ListPlansPage extends Component {
         <div className="App-body">
           <Col xs={12}>
           <h3>Plans</h3>
-
+          <Button bsStyle="default" onClick={() => this.props.router.push('/add')}>Add Plan</Button>
           {this.state.plans.map((planData, idx) => {
             const planName = planData.plan.source + " - " + planData.plan.version
             return (
@@ -62,10 +69,10 @@ class ListPlansPage extends Component {
                   <span className="rules-header">Completed: </span>{planData.plan.completed.toString()}
                   <br/>
                   <span className="rules-header">Active: </span>{planData.plan.active.toString()}
-                  <ActiveInactiveBtn planId={planData.plan.id} currentStatus={planData.plan.active} onChange={this.setActiveInactive}/>
+                  <ActiveInactiveBtn planId={planData.plan.id} currentStatus={planData.plan.active} onChange={this.setActiveInactive} hidden={planData.plan.completed}/>
                   <br />
                   <span className="rules-header">Rules: </span>
-                  <Button bsStyle="default" onClick={() => this.props.router.push('/' + planData.plan.id + '/addRule')}>Add Rules</Button>
+                  {this.renderAddRuleButton(planData)}
                   <div className="rules">
                     <div className="rule-defs">
                       {planData.plan.rules.map((rule, ruleIdx) => {

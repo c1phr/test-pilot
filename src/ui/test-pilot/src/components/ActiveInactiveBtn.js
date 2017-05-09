@@ -21,6 +21,9 @@ class ActiveInactiveBtn extends Component {
   }
 
   render() {
+    if (this.props.hidden) {
+      return null
+    }
     const btnText = this.props.currentStatus ? "Deactivate" : "Activate"
 
     return (

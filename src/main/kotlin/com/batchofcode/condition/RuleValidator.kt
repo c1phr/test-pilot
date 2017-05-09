@@ -26,7 +26,7 @@ class RuleValidator constructor(val testPlanService: TestPlanService, val notify
             if (plan.active) {
                 notifyService.notifyPlanSatisfied(plan)
             }
-            testPlanService.save(plan)
         }
+        testPlanService.save(plan)
     }
 }
