@@ -24,8 +24,8 @@ class ListPlansPage extends Component {
 
   setActiveInactive(event) {
     const newPlans = this.state.plans
-    const editedPlanIdx = newPlans.findIndex((plan) => {return plan.id === event.id})
-    newPlans[editedPlanIdx].active = event.status
+    const editedPlanIdx = newPlans.findIndex((planData) => {return planData.plan.id === event.id})
+    newPlans[editedPlanIdx].plan.active = event.status
     this.setState({
       ...this.state,
       plans: newPlans
@@ -50,28 +50,28 @@ class ListPlansPage extends Component {
     }
     return (
       <div className="App">
-        <div className="App-intro">
+        <div className="App-body">
           <Col xs={12}>
           <h3>Plans</h3>
 
-          {this.state.plans.map((plan, idx) => {
-            const planName = plan.source + " - " + plan.version
+          {this.state.plans.map((planData, idx) => {
+            const planName = planData.plan.source + " - " + planData.plan.version
             return (
               <PanelGroup accordion key={idx}>
                 <Panel header={planName} eventKey={idx}>
-                  <span className="rules-header">Completed: </span>{plan.completed.toString()}
+                  <span className="rules-header">Completed: </span>{planData.plan.completed.toString()}
                   <br/>
-                  <span className="rules-header">Active: </span>{plan.active.toString()}
-                  <ActiveInactiveBtn planId={plan.id} currentStatus={plan.active} onChange={this.setActiveInactive}/>
+                  <span className="rules-header">Active: </span>{planData.plan.active.toString()}
+                  <ActiveInactiveBtn planId={planData.plan.id} currentStatus={planData.plan.active} onChange={this.setActiveInactive}/>
                   <br />
                   <span className="rules-header">Rules: </span>
-                  <Button bsStyle="default" onClick={() => this.props.router.push('/' + plan.id + '/addRule')}>Add Rules</Button>
+                  <Button bsStyle="default" onClick={() => this.props.router.push('/' + planData.plan.id + '/addRule')}>Add Rules</Button>
                   <div className="rules">
                     <div className="rule-defs">
-                      {plan.rules.map((rule, ruleIdx) => {
+                      {planData.plan.rules.map((rule, ruleIdx) => {
                         return <div key={ruleIdx}>
-                          <Button bsStyle="danger" onClick={() => this.deleteRule(plan.id, rule.id)}>Delete</Button>
-                          {rule.eventName} - {rule.type} - {rule.condition}: {rule.conditionValue}
+                          <Button bsStyle="danger" onClick={() => this.deleteRule(planData.plan.id, rule.id)}>Delete</Button>
+                          {rule.eventName} - {rule.type} - {rule.condition}: {rule.conditionValue} | Found: {planData.events[rule.eventName]}
                           </div>
                       })}
                     </div>

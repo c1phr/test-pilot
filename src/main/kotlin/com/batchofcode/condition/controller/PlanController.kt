@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 class PlanController(val testPlanService: TestPlanService) {
     @RequestMapping(value = "", method = arrayOf(RequestMethod.GET), produces = arrayOf("application/json"))
     fun getPlans(): ResponseEntity<String> {
-        return ResponseEntity(ObjectMapper().writeValueAsString(testPlanService.getAll()), HttpStatus.OK)
+        return ResponseEntity(ObjectMapper().writeValueAsString(testPlanService.getAllWithRuleCounts()), HttpStatus.OK)
     }
 
     @RequestMapping(value = "/{testPlanId}", method = arrayOf(RequestMethod.GET), produces = arrayOf("application/json"))

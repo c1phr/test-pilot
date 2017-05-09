@@ -67,7 +67,8 @@ class CreateRulePage extends Component {
 
     return (
       <div className="App-body">
-        <h2>Add Test Rule - {this.state.plan.source} | {this.state.plan.version}</h2>
+        <h2>Add Test Rule</h2>
+        <h3>{this.state.plan.source} | {this.state.plan.version}</h3>
         <form onSubmit={this.onSubmit}>
           {this.FieldGroup({id: "input-event-name", label: "Event Name", props: {type: "text", name: "eventName", onChange: this.onChange}})}
           <br/>
